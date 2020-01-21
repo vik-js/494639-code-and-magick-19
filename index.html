@@ -180,11 +180,6 @@
     <p class="setup-similar-label">Петр Петров</p>
   </div>
 </template>
-<style>
-	canvas {
-		outline: 1px solid red;
-	}
-</style>
 <script>
   var fireballSize = 22; //размер фаербола в пикселях
   var wizardSpeed = 3; //скорость мага
@@ -202,7 +197,7 @@
   var wizardHeight = getWizardHeight();
 
   var getWizardX = function(width) {
-  	return width / 2 - wizardWidth / 2;
+  	return (width - wizardWidth) / 2;
   };
 
   var getWizardY = function(height) {
