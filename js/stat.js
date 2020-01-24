@@ -4,9 +4,8 @@ var CLOUD_WIDTH = 420; // ширина табло
 var CLOUD_HEIGHT = 270; // высота табло
 var CLOUD_X = 100; // координата X табло
 var CLOUD_Y = 10; // координата Y табло
-var GAP = 20; // padding табло
+var GAP = 20; // отступ
 var GAP_SHADOW = 10; // padding тени
-var FONT_GAP = 20; // высота текста
 var BAR_HEIGHT = 150; // высота колонки
 var BAR_WIDTH = 40; // ширина колонки
 var BAR_DISTANCE = 50; // расстояние между колонками
@@ -40,18 +39,19 @@ window.renderStatistics = function (ctx, players, times) {
 
   var maxTime = getMaxElement(times);
 
-  ctx.fillText('Ура Вы победили!', CLOUD_X + GAP, CLOUD_Y + GAP_SHADOW + FONT_GAP);
-  ctx.fillText('Список результатов:', CLOUD_X + GAP, CLOUD_Y + GAP_SHADOW + FONT_GAP * 2);
+  ctx.fillText('Ура Вы победили!', CLOUD_X + GAP, CLOUD_Y + GAP_SHADOW + GAP);
+  ctx.fillText('Список результатов:', CLOUD_X + GAP, CLOUD_Y + GAP_SHADOW + GAP * 2);
 
   for (var i = 0; i < players.length; i++) {
     ctx.fillStyle = '#000';
-    ctx.fillText(Math.round(times[i]), CLOUD_X + GAP * 2 + (BAR_WIDTH + BAR_DISTANCE) * i, CLOUD_Y + GAP + FONT_GAP * 3);
+    ctx.textBaseline = 'top';
+    ctx.fillText(Math.round(times[i]), CLOUD_X + GAP * 2 + (BAR_WIDTH + BAR_DISTANCE) * i, CLOUD_Y + GAP * 3 + BAR_HEIGHT - (BAR_HEIGHT * (100 * times[i]) / maxTime) / 100);
 
     ctx.fillStyle = players[i] === 'Вы' ? 'rgba(255, 0, 0, 1)' : 'hsl(240,' + intRand(0, 100) + '%,' + intRand(0, 100) + '%)';
-    ctx.fillRect(CLOUD_X + GAP * 2 + (BAR_WIDTH + BAR_DISTANCE) * i, CLOUD_Y + GAP + FONT_GAP * 3, BAR_WIDTH, (BAR_HEIGHT * (100 * times[i]) / maxTime) / 100);
+    ctx.fillRect(CLOUD_X + GAP * 2 + (BAR_WIDTH + BAR_DISTANCE) * i, CLOUD_Y + GAP * 4 + BAR_HEIGHT, BAR_WIDTH, -(BAR_HEIGHT * (100 * times[i]) / maxTime) / 100);
 
     ctx.fillStyle = '#000';
-    ctx.fillText(players[i], CLOUD_X + GAP * 2 + (BAR_WIDTH + BAR_DISTANCE) * i, FONT_GAP + BAR_HEIGHT);
+    ctx.textBaseline = 'alphabetic';
+    ctx.fillText(players[i], CLOUD_X + GAP * 2 + (BAR_WIDTH + BAR_DISTANCE) * i, CLOUD_Y + GAP * 5 + BAR_HEIGHT);
   }
-
 };
